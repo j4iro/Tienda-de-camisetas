@@ -288,7 +288,7 @@ button{
     float: right;
     border-left: 1px solid #ccc;
     box-shadow: -5px -1px 5px #ddd;
-    /* padding:25px; */
+    padding:25px;
 }
 
 #central h1{
