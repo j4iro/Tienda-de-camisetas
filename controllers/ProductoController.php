@@ -51,7 +51,11 @@ class ProductoController
 
                 if ($save) 
                 {
-                    $_SESSION['producto'] = "Complete";
+                    $_SESSION['producto'] = "completed";
+                    // var_dump($save);
+                    // echo "<br>";
+                    // var_dump($_SESSION['producto']);
+                    // die();
                 }
                 else
                 {
