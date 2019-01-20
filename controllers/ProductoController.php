@@ -18,9 +18,9 @@ class ProductoController
         require_once 'views/producto/gestion.php';
     }
 
-    public function crear() {
+    public function crear() 
+    {
         Utils::isAdmin();
-
         require_once 'views/producto/crear.php';
     }
 
@@ -37,23 +37,27 @@ class ProductoController
             $categoria = isset($_POST['categoria']) ? $_POST['categoria'] : false;
 
             //Guardar la imagen
-            $file = $_FILES['imagen'];
-            $filename = $file['name'];
-            $mimetype = $file['type'];
 
-            if ($mimetype=="image/jpg" || $mimetype=="image/jpeg" || $mimetype=="image/png" || $mimetype=="image/gif") 
+            if (isset($_FILES['imagen'])) 
             {
-
-                if (!is_dir('uploads/images')) 
+                $file = $_FILES['imagen'];
+                $filename = $file['name'];
+                $mimetype = $file['type'];
+    
+                if ($mimetype=="image/jpg" || $mimetype=="image/jpeg" || $mimetype=="image/png" || $mimetype=="image/gif") 
                 {
-                    mkdir('uploads/images', 0777, true);
+    
+                    if (!is_dir('uploads/images')) 
+                    {
+                        mkdir('uploads/images', 0777, true);
+                    }
+    
+                    move_uploaded_file($file['tmp_name'],'uploads/images/'.$filename);
+                    //$imagen = $filename;
+                
                 }
-
-                move_uploaded_file($file['tmp_name'],'uploads/images/'.$filename);
-                //$imagen = $filename;
-            
             }
-
+           
 
             if ($nombre && $descripcion && $precio && $stock && $categoria) 
             {
@@ -69,7 +73,16 @@ class ProductoController
                 // var_dump($producto);
                 // die();
 
-                $save = $producto->save();
+                if (isset($_GET['id'])) 
+                {
+                    $id = $_GET['id'];
+                    $producto->setId($id);
+                    $save = $producto->edit();
+                }
+                else
+                {
+                    $save = $producto->save();
+                }
 
                 if ($save) 
                 {
@@ -99,7 +112,21 @@ class ProductoController
 
     public function editar()
     {
-        var_dump($_GET);
+        Utils::isAdmin();
+        if (isset($_GET['id'])) 
+        {
+            $id = $_GET['id'];
+            $editar = true;
+            $producto = new Producto();
+            $producto->setId($id);
+            $pro =  $producto->getOne($id);
+
+            require_once 'views/producto/crear.php';
+        }
+        else
+        {
+            header('Location: '. base_url . 'producto/gestion');
+        }
     }
 
     public function eliminar()

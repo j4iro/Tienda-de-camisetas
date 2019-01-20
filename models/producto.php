@@ -90,16 +90,43 @@ class Producto
         $this->imagen = $imagen;
     }
 
-    public function  getAll() 
+    public function getAll() 
     {
         $productos = $this->db->query("SELECT * FROM productos ORDER BY id DESC");
         return  $productos;
 
     }
 
+    public function getOne() 
+    {
+        $producto = $this->db->query("SELECT * FROM productos WHERE id={$this->getId()}");
+        return  $producto->fetch_object();
+
+    }
+
     public function save()
     {
         $sql = "INSERT INTO productos VALUES (NULL,{$this->getCategoria_id()}, '{$this->getNombre()}','{$this->getDescripcion()}',{$this->getPrecio()},{$this->getStock()},null,CURDATE(),'{$this->getImagen()}')";
+
+        // echo $this->db->error;
+        // die();
+        $save = $this->db->query($sql);
+        $result = false;
+
+        if ($save) { $result = true; }
+        return $result;
+    }
+
+    public function edit()
+    {
+        $sql = "UPDATE productos SET categoria_id={$this->getCategoria_id()}, nombre='{$this->getNombre()}', descripcion='{$this->getDescripcion()}', precio = {$this->getPrecio()}, stock = {$this->getStock()}";
+
+        if($this->getImagen() != null)
+        {
+            $sql .= ",imagen = '{$this->getImagen()}'";
+        }
+
+        $sql .= " WHERE id = {$this->getId()} ;";
 
         // echo $this->db->error;
         // die();
