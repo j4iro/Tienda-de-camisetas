@@ -407,11 +407,13 @@ button{
     width: 70px;
     margin: 0px auto;
     text-align: center;
+    
 }
 
 .total-carrito{
    width: 295px;
    float: right; 
+   margin-top: 10px;
 }
 
 .total-carrito h3{

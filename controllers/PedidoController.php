@@ -6,4 +6,9 @@ class PedidoController
     {
         echo "Controlador Pedido, Accion Index";
     }
+
+    public function add()
+    {
+        
+    }
 }
