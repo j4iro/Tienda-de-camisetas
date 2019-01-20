@@ -1,0 +1,24 @@
+<?php if(isset($product)): ?>
+    <h1><?=$product->nombre?></h1>
+
+    <div id="detail-product">
+        <div class="image">
+            <?php if($product->imagen!= null): ?>
+            <img src="<?=base_url?>uploads/images/<?=$product->imagen?>" alt="" srcset="">
+            <?php else: ?>
+            <img src="<?=base_url?>assets/img/camiseta.png" alt="" >
+            <?php endif; ?>
+        </div>
+        <div class="data">
+            <h2><?=$product->nombre?></h2>
+            </a>
+            <p class="description"><?=$product->descripcion?></p>
+            <p class="price">S/. <?=$product->precio?></p>
+            <a  class="button" href="#">Comprar</a>
+        </div>
+    </div>
+
+    
+<?php else: ?>
+    <h1>El producto no existe</h1>
+<?php endif; ?>
