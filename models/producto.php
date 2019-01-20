@@ -94,7 +94,17 @@ class Producto
     {
         $productos = $this->db->query("SELECT * FROM productos ORDER BY id DESC");
         return  $productos;
+    }
 
+    public function getAllCategory() 
+    {
+        $sql = "SELECT p.*, c.nombre as 'catnombre' FROM productos p ";
+        $sql.= "INNER JOIN categorias c ON c.id= p.categoria_id ";
+        $sql.= "WHERE p.categoria_id={$this->getCategoria_id()} ";
+        $sql.= "ORDER BY id DESC";
+
+        $productos = $this->db->query($sql);
+        return  $productos;
     }
 
     public function getRandom($limit) {
@@ -151,6 +161,5 @@ class Producto
         if ($delete) { $result = true; }
         return $result;
     }
-
-
+    
 }
